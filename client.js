@@ -49,9 +49,66 @@ console.log('array of employee data: ',  employees );
 // This function will calculate 1 employee's bonus!
 //
 function calculateIndividualEmployeeBonus( employee ) {  
-  // your logic here
-  
-  
-  // return new object with bonus results
+  // create a varaible "employee object" with new 
+  let empBonusObj = {
+    name: employee.name,
+  }
+ 
+  //if statement if/else for employee rating for bonus
+  if (employee.reviewRating <= 2){
+    empBonusObj.bonusPercentage = 0;
+    empBonusObj.totalBonus = 0;
+  } else if(employee.reviewRating === 3){
+    empBonusObj.bonusPercentage = 0.04
+    empBonusObj.totalBonus = employee.annualSalary * 0.04;
+    console.log(empBonusObj.bonusPercentage);
+  } else if(employee.reviewRating === 4){
+    empBonusObj.bonusPercentage = 0.06
+    empBonusObj.totalBonus = employee.annualSalary * 0.06;
+  }else if(employee.reviewRating === 5){
+    empBonusObj.bonusPercentage = 0.1;
+    empBonusObj.totalBonus = employee.annualSalary * 0.1;
+  }//end if for total bonus %
 
+
+  // if conditional for 4 digit emplyee number
+  if (employee.employeeNumber.length === 4){
+    empBonusObj.bonusPercentage += 0.05
+    empBonusObj.totalBonus += .05 * employee.annualSalary
+  }//end if for 4 digit employee number
+
+  //if conditional for anual salary greater than $65,000
+  if (employee.annualSalary > 65000){
+    empBonusObj.bonusPercentage -=.01;
+    if (empBonusObj.bonusPercentage < 0){
+      empBonusObj.bonusPercentage = 0;
+      empBonusObj.totalBonus = empBonusObj.bonusPercentage * employee.annualSalary
+
+    }
+    else{
+      empBonusObj.totalBonus = empBonusObj.bonusPercentage * employee.annualSalary
+    }
+    
+  
+  }
+  //if conditional for bonus percentage greater than 12% or less than 0%
+if (empBonusObj.bonusPercentage > .13){
+  empBonusObj.bonusPercentage = .13
+} else if(empBonusObj.bonusPercentage < 0 ){
+  empBonusObj.bonusPercentage = 0
+}
+
+// total compensation calculation
+empBonusObj.totalCompensation = empBonusObj.totalBonus + parseInt(employee.annualSalary);
+
+//round total bonus to whole int.
+empBonusObj.totalBonus = Math.round(empBonusObj.totalBonus);
+  // return new object with bonus results
+return empBonusObj
+}//end function calculateIndividualEmployeeBonus
+
+
+//create loop to go through all employees
+for (let person of employees){
+  console.log(calculateIndividualEmployeeBonus(person));
 }
